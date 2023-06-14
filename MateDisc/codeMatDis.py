@@ -38,15 +38,28 @@ def nome_do_vendedor():
     
     janela.mainloop()
 
-# Função para encontrar o índice do vendedor no array
+#busca binária
 def buscar_vendedor(vendedores, nome):
-    for i, vendedor in enumerate(vendedores):
-        if vendedor == nome:
-            return i
+    esquerda = 0
+    direita = len(vendedores) + 1
+
+    while esquerda <= direita:
+        meio = (esquerda + direita) // 2
+
+        if vendedores[meio] == nome:
+            return meio
+
+        elif vendedores[meio] < nome:
+            esquerda = meio + 1
+
+        else:
+            direita = meio - 1 
+
     return -1
 
 # Função para imprimir a lista de clientes de um vendedor
 def imprimir_clientes(nome_vendedor):
+
     indice = buscar_vendedor(vendedores, nome_vendedor)
     janela2 = Tk()
     janela2.geometry('400x200')
@@ -54,7 +67,7 @@ def imprimir_clientes(nome_vendedor):
 
     if indice != -1:
 
-        #Realiza a busca dos clientes no array (busca binária)
+        #Realiza a busca dos clientes no array
         vendedor = vendedores[indice]
         clientes_vendedor = clientes[indice]
 
@@ -73,12 +86,14 @@ def imprimir_clientes(nome_vendedor):
         
     #Vendedor não encontrado
     else:
+
         textoNV = Label(janela2, text= f"Vendedor {nome_vendedor} não encontrado.", height=10, width=55)
         textoNV.grid(column=2, row=0)
         print(f"Vendedor {nome_vendedor} não encontrado.")
 
 #Funções do botão
 def botaop():
+
     global nome_vendedor
     global caixa_1
     #recebe o nome do vendedor
@@ -86,7 +101,6 @@ def botaop():
 
     # Chamada da função para imprimir a lista de clientes
     imprimir_clientes(nome_vendedor)
-
 
 #inicia a função principal
 nome_do_vendedor()
